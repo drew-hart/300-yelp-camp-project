@@ -49,6 +49,16 @@ app.post('/campgrounds', (req, res) => {
   });
 });
 
+app.get('/campgrounds/:id', (req, res) => {
+  Campground.findById(req.params.id, (err, campground) => {
+    if (err) {
+      console.log(`err: ${err}`);
+    } else {
+      res.render('show', { campground });
+    }
+  });
+});
+
 app.listen(8080, () => {
   console.log('Yelp Camp app started ..');
 });
