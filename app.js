@@ -11,6 +11,7 @@ app.set('view engine', 'ejs');
 const campgroundSchema = new mongoose.Schema({
   name: String,
   image: String,
+  description: String,
 });
 
 const Campground = mongoose.model('Campground', campgroundSchema);
@@ -25,7 +26,7 @@ app.get('/campgrounds', (req, res) => {
     if (err) {
       console.log(`error: ${err}`);
     } else {
-      res.render('campgrounds', { campgrounds });
+      res.render('index', { campgrounds });
     }
   });
 });
@@ -39,8 +40,10 @@ app.get('/campgrounds/new', (req, res) => {
 app.post('/campgrounds', (req, res) => {
   const name = req.body.name;
   const image = req.body.image;
+  const description = req.body.description;
+
   // create a new campground record in the Campground object
-  Campground.create({ name, image }, (err) => {
+  Campground.create({ name, image, description }, (err) => {
     if (err) {
       console.log(`err ${err}`);
     } else {
