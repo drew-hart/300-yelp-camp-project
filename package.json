@@ -1,0 +1,38 @@
+{
+  "name": "yelp-camp",
+  "version": "1.0.0",
+  "description": "Web Dev Bootcamp - Yelp Camp Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drew-hart/300-yelp-camp-project.git"
+  },
+  "keywords": [
+    "Web",
+    "Developer",
+    "Bootcamp",
+    "Yelp",
+    "Camp"
+  ],
+  "author": "Drew Hart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drew-hart/300-yelp-camp-project/issues"
+  },
+  "homepage": "https://github.com/drew-hart/300-yelp-camp-project#readme",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "mongoose": "^4.8.6"
+  },
+  "devDependencies": {
+    "eslint": "^3.17.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0"
+  }
+}
