@@ -37,12 +37,14 @@ app.get('/campgrounds/new', (req, res) => {
 
 // CREATE Route
 app.post('/campgrounds', (req, res) => {
-  const name = req.body.name;
-  const image = req.body.image;
-  const description = req.body.description;
+  const campgroundFromForm = {
+    name: req.body.name,
+    image: req.body.image,
+    description: req.body.description,
+  };
 
-  // create a new campground record in the Campground object
-  Campground.create({ name, image, description }, (err) => {
+  // create a new record in the Campground object defined through MongooseJS
+  Campground.create({ campgroundFromForm }, (err) => {
     if (err) {
       console.log(`err ${err}`);
     } else {
