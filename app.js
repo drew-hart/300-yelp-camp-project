@@ -4,35 +4,38 @@ const bodyParser = require('body-parser');
 const Campground = require('./models/campground');
 const Comment = require('./models/comment');
 const seedDB = require('./seeds');
+const path = require('path');
 
 const app = express();
 mongoose.connect('mongodb://localhost/yelp_camp');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, 'public')));
 
 seedDB();
 
+// Route for root path
 app.get('/', (req, res) => {
   res.render('landing');
 });
 
-// Campgrounds display
+// INDEX Route
 app.get('/campgrounds', (req, res) => {
   Campground.find({}, (err, campgrounds) => {
     if (err) {
       console.log(`error: ${err}`);
     } else {
-      res.render('index', { campgrounds });
+      res.render('campgrounds/index', { campgrounds });
     }
   });
 });
 
-// Create a form and post to the /campgrounds post route (below)
+// NEW Route
 app.get('/campgrounds/new', (req, res) => {
-  res.render('new.ejs');
+  res.render('campgrounds/new.ejs');
 });
 
-// When we hit the post route, create a new campground, then redirect to display
+// CREATE Route
 app.post('/campgrounds', (req, res) => {
   const name = req.body.name;
   const image = req.body.image;
