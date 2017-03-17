@@ -63,6 +63,44 @@ app.get('/campgrounds/:id', (req, res) => {
     }
   });
 });
+
+// ==============================
+// COMMENTS ROUTES
+// ==============================
+
+// NEW Route
+app.get('/campgrounds/:id/comments/new', (req, res) => {
+  Campground.findById(req.params.id, (err, campground) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('comments/new', { campground });
+    }
+  });
+});
+
+// CREATE Route
+app.post('/campgrounds/:id/comments', (req, res) => {
+  const commentFromForm = req.body.comment;
+
+  // lookup campground using ID
+  Campground.findById(req.params.id, (err, campground) => {
+    if (err) {
+      console.log(err);
+      res.redirect('/campgrounds');
+    } else {
+      // create new comment and push it into the campground
+      Comment.create(commentFromForm, (err, comment) => {
+        if (err) {
+          console.log(err);
+        } else {
+          campground.comments.push(comment);
+          campground.save();
+          res.redirect(`/campgrounds/${campground.id}`);
+        }
+      });
+      // connect new comment to campground
+      // redirect to campground show page
     }
   });
 });
