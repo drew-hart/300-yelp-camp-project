@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const Campground = require('./models/campground');
+const Comment = require('./models/comment');
 const seedDB = require('./seeds');
 
 const app = express();
