@@ -1,16 +1,37 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const path = require('path');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const seedDB = require('./seeds');
+
+// Models
 const Campground = require('./models/campground');
 const Comment = require('./models/comment');
-const seedDB = require('./seeds');
-const path = require('path');
+const User = require('./models/user');
 
+// Config
 const app = express();
-mongoose.connect('mongodb://localhost/yelp_camp');
+mongoose.connect('mongodb://localhost/yelp_camp', (err) => {
+  if (err) {
+    console.log('Could not connect to mongodb on localhost. Ensure that you have mongodb running on localhost and mongodb accepts connections on standard ports!');
+  }
+});
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'the quick brown fox jumped over the lazy dogs',
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate())); // use static authenticate method of model in LocalStrategy
+passport.serializeUser(User.serializeUser()); // use static serialize of model for passport session support
+passport.deserializeUser(User.deserializeUser()); // use static deserialize of model for passport session support
 
 seedDB();
 
@@ -103,6 +124,35 @@ app.post('/campgrounds/:id/comments', (req, res) => {
       // redirect to campground show page
     }
   });
+});
+
+// =======================
+// Auth routes
+// =======================
+
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+app.post('/register', (req, res) => {
+  const newUser = new User({ username: req.body.username });
+  const password = req.body.password;
+
+  User.register(newUser, password, (err, user) => {
+    if (err) {
+      console.log(`error: $${err}`);
+      return res.redirect('/register');
+    }
+    console.log(`user registered: ${user}`);
+    passport.authenticate('local')(req, res, () => {
+      res.redirect('/campgrounds');
+    });
+  });
+});
+
+app.get('/login', (req, res) => {
+  res.render('login');
+
 });
 
 app.listen(8080, () => {
