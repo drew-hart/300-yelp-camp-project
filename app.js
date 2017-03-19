@@ -152,8 +152,12 @@ app.post('/register', (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login');
-
 });
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/campgrounds',
+  failureRedirect: '/login',
+}));
 
 app.listen(8080, () => {
   console.log('Yelp Camp app started ..');
