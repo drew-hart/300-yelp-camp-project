@@ -40,6 +40,14 @@ app.get('/', (req, res) => {
   res.render('landing');
 });
 
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+  return false;
+}
+
 // INDEX Route
 app.get('/campgrounds', (req, res) => {
   Campground.find({}, (err, campgrounds) => {
@@ -52,12 +60,12 @@ app.get('/campgrounds', (req, res) => {
 });
 
 // NEW Route
-app.get('/campgrounds/new', (req, res) => {
+app.get('/campgrounds/new', isLoggedIn, (req, res) => {
   res.render('campgrounds/new.ejs');
 });
 
 // CREATE Route
-app.post('/campgrounds', (req, res) => {
+app.post('/campgrounds', isLoggedIn, (req, res) => {
   const campgroundFromForm = {
     name: req.body.name,
     image: req.body.image,
@@ -90,7 +98,7 @@ app.get('/campgrounds/:id', (req, res) => {
 // ==============================
 
 // NEW Route
-app.get('/campgrounds/:id/comments/new', (req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
       console.log(err);
@@ -101,7 +109,7 @@ app.get('/campgrounds/:id/comments/new', (req, res) => {
 });
 
 // CREATE Route
-app.post('/campgrounds/:id/comments', (req, res) => {
+app.post('/campgrounds/:id/comments', isLoggedIn, (req, res) => {
   const commentFromForm = req.body.comment;
 
   // lookup campground using ID
