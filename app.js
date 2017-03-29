@@ -125,12 +125,12 @@ app.post('/campgrounds/:id/comments', isLoggedIn, (req, res) => {
       // create new comment and push it into the campground
       Comment.create(commentFromForm, (err, comment) => {
         if (err) {
-          console.log(err);
-        } else {
-          campground.comments.push(comment);
-          campground.save();
-          res.redirect(`/campgrounds/${campground.id}`);
+          return console.log(err);
         }
+        campground.comments.push(comment);
+        campground.save();
+        res.redirect(`/campgrounds/${campground.id}`);
+        return false;
       });
       // connect new comment to campground
       // redirect to campground show page
