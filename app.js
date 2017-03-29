@@ -32,6 +32,10 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate())); // use static authenticate method of model in LocalStrategy
 passport.serializeUser(User.serializeUser()); // use static serialize of model for passport session support
 passport.deserializeUser(User.deserializeUser()); // use static deserialize of model for passport session support
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 seedDB();
 

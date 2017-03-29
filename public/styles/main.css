@@ -5,3 +5,8 @@
 .comments {
   background: #f3f3f3;
 }
+
+.navbar-text {
+  padding-top: .5rem;
+  padding-right: 2rem;
+}
