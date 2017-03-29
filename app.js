@@ -16,7 +16,7 @@ const User = require('./models/user');
 const app = express();
 mongoose.connect('mongodb://localhost/yelp_camp', (err) => {
   if (err) {
-    console.log('Could not connect to mongodb on localhost. Ensure that you have mongodb running on localhost and mongodb accepts connections on standard ports!');
+    console.log('Could not connect to mongodb on localhost.');
   }
 });
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -158,6 +158,12 @@ app.post('/login', passport.authenticate('local', {
   successRedirect: '/campgrounds',
   failureRedirect: '/login',
 }));
+
+// Logout route
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/campgrounds');
+});
 
 app.listen(8080, () => {
   console.log('Yelp Camp app started ..');
