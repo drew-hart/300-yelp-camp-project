@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // models
 const Campground = require('../models/campground');
@@ -15,7 +15,8 @@ function isLoggedIn(req, res, next) {
   return false;
 }
 
-router.use(logger('combined'));
+// Middleware for logging
+// router.use(logger('combined'));
 
 // --------------
 // Routes

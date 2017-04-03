@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // models
 const Campground = require('../models/campground');
@@ -16,7 +16,8 @@ function isLoggedIn(req, res, next) {
   return false;
 }
 
-router.use(logger('combined'));
+// Middleware for logging
+// router.use(logger('combined'));
 
 // --------------
 // Routes
@@ -36,6 +37,8 @@ router.get('/new', isLoggedIn, (req, res) => {
 // CREATE Route
 router.post('/', isLoggedIn, (req, res) => {
   const commentFromForm = req.body.comment;
+  const authorUsername = req.user.username;
+  const authorId = req.user._id;
 
   // lookup campground using ID
   Campground.findById(req.params.id, (err, campground) => {
@@ -45,11 +48,15 @@ router.post('/', isLoggedIn, (req, res) => {
     } else {
       // create new comment and push it into the campground
       Comment.create(commentFromForm, (err, comment) => {
-        if (err) {
-          return console.log(err);
-        }
-        campground.comments.push(comment);
+        if (err) { return console.log(err); }
+        const thisComment = comment;
+
+        thisComment.author.username = authorUsername;
+        thisComment.author.id = authorId;
+        thisComment.save();
+        campground.comments.push(thisComment);
         campground.save();
+        console.log(comment);
         res.redirect(`/campgrounds/${campground.id}`);
         return false;
       });

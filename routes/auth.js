@@ -3,13 +3,21 @@ const logger = require('morgan');
 
 const passport = require('passport');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // models
 const User = require('../models/user');
 
 // functions
-router.use(logger('combined'));
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+  return false;
+}
+// Middleware for logging
+// router.use(logger('combined'));
 
 // Default route
 router.get('/', (req, res) => {
@@ -52,7 +60,7 @@ router.post('/login', passport.authenticate('local', {
 }));
 
 // LOGOUT route
-router.get('/logout', (req, res) => {
+router.get('/logout', isLoggedIn, (req, res) => {
   req.logout();
   res.redirect('/campgrounds');
 });

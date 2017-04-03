@@ -24,32 +24,32 @@ const data = [
 function seedDB() {
   // Remove all data from the model
   Campground.remove({}, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('removed campground data...');
-      data.forEach((seed) => {
-        Campground.create(seed, (err, campground) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(`added campground: ${seed.name}`);
-            Comment.create({
-              text: 'Commodo amet nulla in laborum occaecat ullamco veniam duis veniam officia ipsum id incididunt occaecat minim.',
-              author: 'Homer',
-            }, (err, comment) => {
-              if (err) {
-                console.log(err);
-              } else {
-                campground.comments.push(comment);
-                campground.save();
-                console.log(`added comment by author ${comment.author}`);
-              }
-            });
-          }
-        });
-      });
-    }
+//    if (err) {
+//      console.log(err);
+//    } else {
+//      console.log('removed campground data...');
+//      data.forEach((seed) => {
+//        Campground.create(seed, (err, campground) => {
+//          if (err) {
+//            console.log(err);
+//          } else {
+//            console.log(`added campground: ${seed.name}`);
+//            Comment.create({
+//              text: 'Commodo amet nulla in laborum occaecat ullamco veniam duis veniam officia ipsum id incididunt occaecat minim.',
+//              author: 'Homer',
+//            }, (err, comment) => {
+//              if (err) {
+//                console.log(err);
+//              } else {
+//                campground.comments.push(comment);
+//                campground.save();
+//                console.log(`added comment by author ${comment.author}`);
+//              }
+//            });
+//          }
+//        });
+//      });
+//    }
   });
 
   // Add campground seed data

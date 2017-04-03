@@ -7,6 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const seedDB = require('./seeds');
 
+// routes
 const campgroundRoutes = require('./routes/campgrounds');
 const commentRoutes = require('./routes/comments');
 const authRoutes = require('./routes/auth');
@@ -53,7 +54,7 @@ app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
 
 // seed db
-seedDB();
+// seedDB();
 
 // start app
 app.listen(8080, () => {
