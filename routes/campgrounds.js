@@ -45,9 +45,8 @@ router.post('/', isLoggedIn, (req, res) => {
     image: req.body.image,
     description: req.body.description,
   };
-
   // create a new record in the Campground object defined through MongooseJS
-  Campground.create({ campgroundFromForm }, (err) => {
+  Campground.create(campgroundFromForm, (err) => {
     if (err) {
       console.log(`err ${err}`);
     } else {

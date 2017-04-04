@@ -36,6 +36,7 @@ router.get('/new', isLoggedIn, (req, res) => {
 
 // CREATE Route
 router.post('/', isLoggedIn, (req, res) => {
+  // create object with comment form and meta data
   const commentFromForm = {
     text: req.body.comment.text,
     author: {

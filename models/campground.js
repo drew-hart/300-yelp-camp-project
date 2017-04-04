@@ -6,7 +6,7 @@ const campgroundSchema = new mongoose.Schema({
   description: String,
   author: {
     id: {
-      type: mongoose.Schema.type.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
     username: String,
