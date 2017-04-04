@@ -40,10 +40,15 @@ router.get('/new', isLoggedIn, (req, res) => {
 
 // CREATE Route
 router.post('/', isLoggedIn, (req, res) => {
+  // create object with campground form and meta data
   const campgroundFromForm = {
     name: req.body.name,
     image: req.body.image,
     description: req.body.description,
+    author: {
+      id: req.user.id,
+      username: req.user.username,
+    },
   };
   // create a new record in the Campground object defined through MongooseJS
   Campground.create(campgroundFromForm, (err) => {
