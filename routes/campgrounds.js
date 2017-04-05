@@ -15,6 +15,26 @@ function isLoggedIn(req, res, next) {
   return false;
 }
 
+function checkCampgroundOwnership(req, res, next) {
+  if (req.isAuthenticated()) {
+    Campground.findById(req.params.id, (err, campground) => {
+      if (err) {
+        console.log(`error: ${err}`);
+        return res.send(`error: ${err}`);
+      }
+
+      if (campground.author.id.equals(req.user.id)) {
+        next();
+      }
+      return false;
+    });
+  } else {
+    console.log('you need to be logged in to do that');
+    return res.redirect(`/campgrounds/${req.params.id}`);
+  }
+  return false;
+}
+
 // Middleware for logging
 // router.use(logger('combined'));
 
@@ -73,7 +93,7 @@ router.get('/:id', (req, res) => {
 });
 
 // EDIT Route
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', checkCampgroundOwnership, (req, res) => {
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
       console.log(`error: ${err}`);
@@ -84,7 +104,7 @@ router.get('/:id/edit', (req, res) => {
 });
 
 // UPDATE Route
-router.put('/:id', (req, res) => {
+router.put('/:id', checkCampgroundOwnership, (req, res) => {
   Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err) => {
     if (err) {
       console.log(`error: ${err}`);
@@ -95,7 +115,7 @@ router.put('/:id', (req, res) => {
 });
 
 // DESTROY Route
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkCampgroundOwnership, (req, res) => {
   Campground.findByIdAndRemove(req.params.id, (err) => {
     if (err) {
       console.log(`error: ${err}`);
