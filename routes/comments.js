@@ -63,4 +63,47 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
+// EDIT Route
+router.get('/:comment_id/edit', (req, res) => {
+  Campground.findById(req.params.id, (err, campground) => {
+    if (err) {
+      console.log(`error: ${err}`);
+      return res.send(`error: ${err}`);
+    }
+    Comment.findById(req.params.comment_id, (err, comment) => {
+      if (err) {
+        console.log(`error: ${err}`);
+        return res.send(`error: ${err}`);
+      }
+      return res.render('comments/edit', { campground, comment });
+    });
+    return false;
+  });
+});
+
+// UPDATE Route
+router.put('/:comment_id', (req, res) => {
+  const commentData = {
+    text: req.body.comment.text,
+  };
+
+  Comment.findByIdAndUpdate(req.params.comment_id, commentData, (err) => {
+    if (err) {
+      console.log(`error: ${err}`);
+      return res.send(`error: ${err}`);
+    }
+    return res.redirect(`/campgrounds/${req.params.id}`);
+  });
+});
+
+// DELETE Route
+router.delete('/:comment_id', (req, res) => {
+  Comment.findByIdAndRemove(req.params.comment_id, (err) => {
+    if (err) {
+      console.log(`error: ${err}`);
+      return res.send(`error: ${err}`);
+    }
+    return res.redirect(`/campgrounds/${req.params.id}`);
+  });
+});
 module.exports = router;
