@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const timestamps = require('mongoose-timestamp');
 
 const commentSchema = new mongoose.Schema({
   text: String,
@@ -10,5 +11,6 @@ const commentSchema = new mongoose.Schema({
     username: String,
   },
 });
+commentSchema.plugin(timestamps);
 
 module.exports = mongoose.model('Comment', commentSchema);

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const timestamps = require('mongoose-timestamp');
 
 const campgroundSchema = new mongoose.Schema({
   name: String,
@@ -18,5 +19,6 @@ const campgroundSchema = new mongoose.Schema({
     },
   ],
 });
+campgroundSchema.plugin(timestamps);
 
 module.exports = mongoose.model('Campground', campgroundSchema);
