@@ -5,6 +5,7 @@ const session = require('express-session');
 const path = require('path');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const methodOverride = require('method-override');
 const seedDB = require('./seeds');
 
 // routes
@@ -24,6 +25,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 
 // db init
 mongoose.connect('mongodb://localhost/yelp_camp', (err) => {
