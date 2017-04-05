@@ -27,9 +27,9 @@ router.get('/', (req, res) => {
   Campground.find({}, (err, campgrounds) => {
     if (err) {
       console.log(`error: ${err}`);
-    } else {
-      res.render('campgrounds/index', { campgrounds });
+      return res.send(`An error occured: ${err}`);
     }
+    return res.render('campgrounds/index', { campgrounds });
   });
 });
 
@@ -53,20 +53,36 @@ router.post('/', isLoggedIn, (req, res) => {
   // create a new record in the Campground object defined through MongooseJS
   Campground.create(campgroundFromForm, (err) => {
     if (err) {
-      console.log(`err ${err}`);
-    } else {
-      res.redirect('/campgrounds');
+      console.log(`error: ${err}`);
+      return res.send(`error: ${err}`);
     }
+    return res.redirect('/campgrounds');
   });
 });
 
 // SHOW Route
 router.get('/:id', (req, res) => {
+  // .populate links Comments to Campgrounds so we can see them on the show page
   Campground.findById(req.params.id).populate('comments').exec((err, campground) => {
     if (err) {
-      console.log(`err: ${err}`);
-    } else {
-      res.render('campgrounds/show', { campground });
+      console.log(`error: ${err}`);
+      return res.send(`error: ${err}`);
+    }
+    return res.render('campgrounds/show', { campground });
+  });
+});
+
+// EDIT Route
+router.get('/:id/edit', (req, res) => {
+  Campground.findById(req.params.id, (err, campground) => {
+    if (err) {
+      console.log(`error: ${err}`);
+      return res.send(`error: ${err}`);
+    }
+    return res.render('campgrounds/edit', { campground });
+  });
+});
+
     }
   });
 });
