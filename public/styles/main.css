@@ -14,3 +14,26 @@
 .card-group {
   margin-top: 2rem;
 }
+
+.card-button {
+  margin-left: 0.25rem;
+}
+
+.card-block.comment > * {
+  display: inline;
+}
+
+.card-block.comment > .card-title {
+  color: #222;
+  margin-right: 1rem;
+}
+
+.card-block.comment > .submitted-date {
+  color: #aaa;
+}
+
+.card-block.comment > .card-text {
+  display: block;
+  margin-top: 1rem;
+  color: #222;
+}
