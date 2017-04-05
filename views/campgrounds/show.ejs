@@ -21,13 +21,15 @@
           </div>
           <p class="card-text"><%= campground.description %></p>
           <p class="card-text font-italic">Submitted by <%= campground.author.username %></p>
+          <form class="" action="/campgrounds/<%= campground.id %>/?_method=DELETE" method="POST">
+            <a class="btn btn-warning" href="/campgrounds/<%= campground.id %>/edit">Edit</a>
+            <button class="btn btn-danger">Delete</button>
+            <a class="btn btn-success float-right" href="/campgrounds/<%= campground.id %>/comments/new">Add a Comment</a>
+          </form>
         </div>
       </div>
       <div class="card comments">
         <div class="card-block">
-          <div class="clearfix">
-            <a class="btn btn-success float-right" href="/campgrounds/<%= campground.id %>/comments/new">Add a Comment</a>
-          </div>
           <% campground.comments.forEach( (comment) => { %>
             <div class="row">
               <div class="col-md-12">
