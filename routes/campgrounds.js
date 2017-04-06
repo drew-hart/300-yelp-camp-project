@@ -20,19 +20,20 @@ function checkCampgroundOwnership(req, res, next) {
     Campground.findById(req.params.id, (err, campground) => {
       if (err) {
         console.log(`error: ${err}`);
-        return res.send(`error: ${err}`);
+        return res.redirect('back');
       }
 
       if (campground.author.id.equals(req.user.id)) {
         next();
+      } else {
+        console.log('You do not have permission to edit this campground');
+        return res.redirect('back');
       }
-      return false;
     });
   } else {
-    console.log('you need to be logged in to do that');
-    return res.redirect(`/campgrounds/${req.params.id}`);
+    console.log('You are not logged in');
+    return res.redirect('back');
   }
-  return false;
 }
 
 // Middleware for logging
