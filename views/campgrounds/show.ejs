@@ -21,11 +21,13 @@
           </div>
           <p class="card-text"><%= campground.description %></p>
           <p class="card-text font-italic">Submitted by <%= campground.author.username %></p>
-          <form class="" action="/campgrounds/<%= campground.id %>/?_method=DELETE" method="POST">
-            <a class="btn btn-outline-warning" href="/campgrounds/<%= campground.id %>/edit">Edit</a>
-            <button class="btn btn-outline-danger">Delete</button>
-            <a class="btn btn-success float-right" href="/campgrounds/<%= campground.id %>/comments/new">Add a Comment</a>
-          </form>
+          <% if (currentUser && campground.author.id.equals(currentUser.id)) { %>
+            <form class="" action="/campgrounds/<%= campground.id %>/?_method=DELETE" method="POST">
+              <a class="btn btn-outline-warning" href="/campgrounds/<%= campground.id %>/edit">Edit</a>
+              <button class="btn btn-outline-danger">Delete</button>
+            </form>
+          <% } %>
+          <a class="btn btn-success float-right" href="/campgrounds/<%= campground.id %>/comments/new">Add a Comment</a>
         </div>
       </div>
       <div class="card comments">
@@ -36,10 +38,13 @@
                 <div class="card-block comment">
                   <p class="card-title"><strong><%= comment.author.username %></strong></p>
                   <p class="card-title submitted-date"><%= comment.createdAt %></p>
-                  <form class="" action="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/?_method=DELETE" method="POST">
-                    <button class="btn btn-outline-danger btn-sm float-right card-button" href="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/">Delete</button>
-                    <a class="btn btn-outline-warning btn-sm float-right card-button" href="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/edit">Edit</a>
-                  </form>
+                  <% debugger %>
+                  <% if (currentUser && comment.author.id.equals(currentUser.id)) { %>
+                      <form class="" action="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/?_method=DELETE" method="POST">
+                      <button class="btn btn-outline-danger btn-sm float-right card-button" href="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/">Delete</button>
+                      <a class="btn btn-outline-warning btn-sm float-right card-button" href="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/edit">Edit</a>
+                    </form>
+                  <% } %>
                   <p class="card-text"><%= comment.text %></p>
                 </div>
               </div>

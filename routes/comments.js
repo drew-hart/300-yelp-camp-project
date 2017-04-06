@@ -16,6 +16,27 @@ function isLoggedIn(req, res, next) {
   return false;
 }
 
+function checkCommentOwnership(req, res, next) {
+  if (req.isAuthenticated()) {
+    Comment.findById(req.params.comment_id, (err, comment) => {
+      if (err) {
+        console.log(`error: ${err}`);
+        return res.redirect('back');
+      }
+
+      if (comment.author.id.equals(req.user.comment_id)) {
+        next();
+      } else {
+        console.log('You do not have permission to edit this campground');
+        return res.redirect('back');
+      }
+    });
+  } else {
+    console.log('You are not logged in');
+    return res.redirect('back');
+  }
+}
+
 // Middleware for logging
 // router.use(logger('combined'));
 
@@ -64,7 +85,7 @@ router.post('/', isLoggedIn, (req, res) => {
 });
 
 // EDIT Route
-router.get('/:comment_id/edit', (req, res) => {
+router.get('/:comment_id/edit', checkCommentOwnership, (req, res) => {
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
       console.log(`error: ${err}`);
@@ -82,7 +103,7 @@ router.get('/:comment_id/edit', (req, res) => {
 });
 
 // UPDATE Route
-router.put('/:comment_id', (req, res) => {
+router.put('/:comment_id', checkCommentOwnership, (req, res) => {
   const commentData = {
     text: req.body.comment.text,
   };
@@ -97,7 +118,7 @@ router.put('/:comment_id', (req, res) => {
 });
 
 // DELETE Route
-router.delete('/:comment_id', (req, res) => {
+router.delete('/:comment_id', checkCommentOwnership, (req, res) => {
   Comment.findByIdAndRemove(req.params.comment_id, (err) => {
     if (err) {
       console.log(`error: ${err}`);
