@@ -6,7 +6,6 @@ const path = require('path');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const methodOverride = require('method-override');
-const seedDB = require('./seeds');
 
 // routes
 const campgroundRoutes = require('./routes/campgrounds');
@@ -54,9 +53,6 @@ app.use((req, res, next) => {
 app.use('/', authRoutes);
 app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
-
-// seed db
-// seedDB();
 
 // start app
 app.listen(8080, () => {
