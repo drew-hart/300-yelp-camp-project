@@ -31,6 +31,7 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
   // create object with campground form and meta data
   const campgroundFromForm = {
     name: req.body.name,
+    price: req.body.price,
     image: req.body.image,
     description: req.body.description,
     author: {

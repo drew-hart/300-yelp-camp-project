@@ -17,14 +17,14 @@
         <div class="card-block">
           <div class="clearfix">
             <p class="h4 card-title float-left"><%= campground.name %></p>
-            <p class="h4 card-title float-right">$9.00 / night</p>
+            <p class="h4 card-title float-right">$<%= campground.price %>/ night</p>
           </div>
           <p class="card-text"><%= campground.description %></p>
           <p class="card-text font-italic">Submitted by <%= campground.author.username %></p>
           <% if (currentUser && campground.author.id.equals(currentUser.id)) { %>
-            <form class="" action="/campgrounds/<%= campground.id %>/?_method=DELETE" method="POST">
-              <a class="btn btn-outline-warning" href="/campgrounds/<%= campground.id %>/edit">Edit</a>
-              <button class="btn btn-outline-danger">Delete</button>
+            <form class="show-form" action="/campgrounds/<%= campground.id %>/?_method=DELETE" method="POST">
+              <a class="btn btn-warning" href="/campgrounds/<%= campground.id %>/edit">Edit</a>
+              <button class="btn btn-danger">Delete</button>
             </form>
           <% } %>
           <a class="btn btn-success float-right" href="/campgrounds/<%= campground.id %>/comments/new">Add a Comment</a>
@@ -41,8 +41,8 @@
                   <% debugger %>
                   <% if (currentUser && comment.author.id.equals(currentUser.id)) { %>
                       <form class="" action="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/?_method=DELETE" method="POST">
-                      <button class="btn btn-outline-danger btn-sm float-right card-button" href="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/">Delete</button>
-                      <a class="btn btn-outline-warning btn-sm float-right card-button" href="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/edit">Edit</a>
+                      <button class="btn btn-danger btn-sm float-right card-button" href="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/">Delete</button>
+                      <a class="btn btn-warning btn-sm float-right card-button" href="/campgrounds/<%= campground.id %>/comments/<%= comment.id %>/edit">Edit</a>
                     </form>
                   <% } %>
                   <p class="card-text"><%= comment.text %></p>
