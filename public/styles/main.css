@@ -1,3 +1,15 @@
+body {
+  background-image: url('http://i.imgur.com/K3mPv14.jpg');
+  background-size: cover;
+}
+.jumbotron, .card {
+  background: rgba(240, 240, 240, 0.74);
+}
+
+h1 {
+  text-shadow: 0 2px 3px #afafaf;
+}
+
 .img-thumbnail {
   width: 100%;
 }

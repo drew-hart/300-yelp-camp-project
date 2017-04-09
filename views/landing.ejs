@@ -1,9 +1,46 @@
-<% include partials/header %>
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>Landing page!</h1>
+<head>
+ <meta charset="UTF-8">
+ <title>Yelp Camp</title>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+ <link rel="stylesheet" href="/styles/landing.css"/>
+</head>
 
-<p>Welcome to Yelp Camp!</p>
+<body>
+  <% if (error && error.length > 0) { %>
+    <div class="container">
+      <div class="alert alert-danger" role="alert">
+        <%= error %>
+      </div>
+    </div>
+  <% } %>
+    <% if (success && success.length > 0) { %>
+      <div class="container">
+        <div class="alert alert-success" role="alert">
+          <%= success %>
+        </div>
+      </div>
+  <% } %>
 
-<button><a href="/campgrounds">View Campgrounds</a></button>
+  <div id="landing-header">
+    <h1>Welcome to YelpCamp!</h1>
+    <a class="btn btn-primary btn-lg" href="/campgrounds">View Campgrounds</a>
+  </div>
 
-<% include partials/footer %>
+  <ul class="slideshow">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+ <script src="app.js"></script>
+</body>
+
+</html>
