@@ -25,6 +25,7 @@
   "homepage": "https://github.com/drew-hart/300-yelp-camp-project#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "connect-flash": "^0.1.1",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "express-session": "^1.15.1",

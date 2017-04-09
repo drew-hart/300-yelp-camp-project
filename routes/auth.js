@@ -1,5 +1,5 @@
 const express = require('express');
-const logger = require('morgan');
+const middleware = require('../middleware');
 
 const passport = require('passport');
 
@@ -7,17 +7,6 @@ const router = express.Router({ mergeParams: true });
 
 // models
 const User = require('../models/user');
-
-// functions
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-  return false;
-}
-// Middleware for logging
-// router.use(logger('combined'));
 
 // Default route
 router.get('/', (req, res) => {
@@ -40,6 +29,7 @@ router.post('/register', (req, res) => {
   User.register(newUser, password, (err) => {
     if (err) {
       console.log(`error: $${err}`);
+      req.flash('error', err.message);
       res.redirect('/register');
     } else {
       passport.authenticate('local')(req, res, () => {
@@ -60,8 +50,9 @@ router.post('/login', passport.authenticate('local', {
 }));
 
 // LOGOUT route
-router.get('/logout', isLoggedIn, (req, res) => {
+router.get('/logout', middleware.isLoggedIn, (req, res) => {
   req.logout();
+  req.flash('success', 'You have been successfully logged out.');
   res.redirect('/campgrounds');
 });
 

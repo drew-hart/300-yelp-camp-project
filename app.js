@@ -6,6 +6,7 @@ const path = require('path');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 
 // routes
 const campgroundRoutes = require('./routes/campgrounds');
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
+app.use(flash());
 
 // db init
 mongoose.connect('mongodb://localhost/yelp_camp', (err) => {
@@ -46,6 +48,8 @@ passport.serializeUser(User.serializeUser()); // use static serialize of model f
 passport.deserializeUser(User.deserializeUser()); // use static deserialize of model for passport session support
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
   next();
 });
 
