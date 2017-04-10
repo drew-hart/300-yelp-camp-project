@@ -2,7 +2,7 @@ body {
   background: #000;
 }
 
-#landing-header {
+.landing-header {
   z-index: 1;
   position: relative;
   text-align: center;

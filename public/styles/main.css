@@ -2,12 +2,26 @@ body {
   background-image: url('http://i.imgur.com/K3mPv14.jpg');
   background-size: cover;
 }
-.jumbotron, .card {
-  background: rgba(240, 240, 240, 0.74);
-}
 
 h1 {
+  color: #fff;
+  text-shadow: 0 1px 5px #222;
+  padding-bottom: 3rem;
+}
+
+.jumbotron {
+  margin-top: 1rem;
+  border-radius: 2px;
+}
+
+.jumbotron h1 {
+  color: #292b2c;
   text-shadow: 0 2px 3px #afafaf;
+}
+
+.jumbotron, .card {
+  background: #fff;
+  background: rgba(240, 240, 240, 0.74);
 }
 
 .img-thumbnail {
@@ -16,6 +30,11 @@ h1 {
 
 .comments {
   background: #f3f3f3;
+}
+
+nav {
+  background: #fff;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .navbar-text {
@@ -52,4 +71,13 @@ h1 {
 
 .show-form {
   display: inline;
+}
+
+.login-header {
+  padding-top: 15vh;
+  text-align: center;
+}
+
+.login .form-control {
+  margin-bottom: 1rem;
 }
